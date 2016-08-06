@@ -1,0 +1,63 @@
+<h1>Pizza</h1>
+
+<h2>Pizza that is not devoured!</h2>
+
+<ul>
+  {{#each pizza}}
+    {{#unless this.devoured}}
+      <li>
+        {{this.pizza_name}}
+
+        <form action="pizza/update/{{this.id}}?_method=PUT" method="POST">
+          <input type="hidden" name="devoured" value="true">
+          <button type="submit">Devour it!</button>
+        </form>
+
+
+
+        <form action="pizza/delete/{{this.id}}?_method=DELETE" method="POST">
+          <!-- option 2, pass in the id of the cat inside the form - you would access this in the route using req.body.id not req.params.id -->
+          <input type="hidden" name="id" value="{{this.id}}">
+          <button type="submit">DELETE!</button>
+        </form>
+
+
+
+      </li>
+    {{/unless}}
+  {{/each}}
+</ul>
+
+<h2>Pizza that is devoured</h2>
+
+<ul>
+  {{#each pizza}}
+    {{#if this.devoured}}
+      <li>
+        {{this.pizza_name}}
+
+        <form action="pizza/update/{{this.id}}?_method=PUT" method="POST">
+          <input type="hidden" name="devoured" value="false">
+          <button type="submit">Undevoure it!</button>
+        </form>
+      </li>
+    {{/if}}
+  {{/each}}
+</ul>
+
+<h2>Add a Pizza</h2>
+<form class="create-update-form" action="pizza/create" method="POST">
+
+  <div class="form-group">
+    <label for="ca">Pizza Name:</label>
+    <input type="text" id="ca" name="pizza_name">
+  </div>
+
+  <div class="form-group">
+    <label for="slee">Devoured?</label><br>
+    <input type="radio" name="devoured" value="1" checked> Devoured<br>
+    <input type="radio" name="devoured" value="0"> Undevoured!
+  </div>
+
+  <button type="submit">Add Your Pizza</button>
+</form>
